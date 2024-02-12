@@ -46,13 +46,9 @@ pipeline {
                     }
                    steps {
                        sh '''
-                       sudo apt-get update                                       
-
-                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'sudo apt-get update && sudo apt-get install -y docker.io'
-                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'sudo systemctl start docker && sudo systemctl enable docker'
-                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'logout'
-                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'sudo apt-get install -y sshpass'
-                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" deploy.yml'
+                       sudo apt-get update
+                       sudo apt-get install -y sshpass
+                       ssh 'ansible-playbook -i hosts.yml --vault-password-file vault.key deploy.yml'                       
                        '''
                    }
                } 
