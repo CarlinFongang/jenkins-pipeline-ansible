@@ -1,7 +1,7 @@
 ---
 - name: Deploy Apache container
   hosts: prod
-  become: yes
+  become: true
   tasks:
     - name: Ensure Docker is installed
       ansible.builtin.package:
