@@ -46,8 +46,8 @@ pipeline {
                     }
                    steps {
                        sh '''
-                       sudo apt-get update
-                       sudo apt-get install -y sshpass
+                       apt-get update
+                       apt-get install -y sshpass
                        ssh 'ansible-playbook -i hosts.yml --vault-password-file vault.key deploy.yml'                       
                        '''
                    }
