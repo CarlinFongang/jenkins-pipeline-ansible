@@ -33,7 +33,7 @@ pipeline {
                 EC2_HOST = '44.201.61.29' // Remplacez par l'adresse IP publique ou le DNS de votre instance EC2
                 EC2_USER = 'ubuntu' // Remplacez par l'utilisateur SSH de votre instance EC2
             }
-            agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest' } }
+            agent { docker { image 'registry.gitlab.com/op_so/docker/ansible/master:de818487' } }
             stages {
                stage("Verify ansible playbook syntax") {
                    steps {
