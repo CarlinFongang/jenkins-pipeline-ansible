@@ -28,7 +28,10 @@ pipeline {
         }
         stage('Test and deploy the application') {
             environment {
-                SUDOPASS = credentials('sudopass')
+                //SUDOPASS = credentials('sudopass')
+                EC2_SSH_KEY = credentials('ec2_ssh_key') // Nouvelle clé SSH pour accéder à l'instance EC2
+                EC2_HOST = '44.201.61.29' // Remplacez par l'adresse IP publique ou le DNS de votre instance EC2
+                EC2_USER = 'ubuntu' // Remplacez par l'utilisateur SSH de votre instance EC2
             }
             agent { docker { image 'registry.gitlab.com/robconnolly/docker-ansible:latest' } }
             stages {
@@ -43,9 +46,13 @@ pipeline {
                     }
                    steps {
                        sh '''
-                       apt-get update
-                       apt-get install -y sshpass
-                       ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" deploy.yml
+                       sudo apt-get update                                       
+
+                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'sudo apt-get update && sudo apt-get install -y docker.io'
+                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'sudo systemctl start docker && sudo systemctl enable docker'
+                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'logout'
+                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'sudo apt-get install -y sshpass'
+                       ssh -o StrictHostKeyChecking=no -i "$EC2_SSH_KEY" "$EC2_USER@$EC2_HOST" 'ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" deploy.yml'
                        '''
                    }
                } 
