@@ -47,7 +47,8 @@ pipeline {
                    steps {
                        sh '''
                        apt-get update
-                       apt-get install -y sshpass        
+                       apt-get install -y sshpass
+                       apt install ansible -y                           
                        ssh -i $EC2_SSH_KEY -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST "ansible-playbook  -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" deploy.yml"
                       
                        '''
