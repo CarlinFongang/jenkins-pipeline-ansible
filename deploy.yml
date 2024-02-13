@@ -1,10 +1,9 @@
 ---
 - name: Deploy Apache container
-  hosts: all
+  hosts: prod
   become: true
   vars_files:
     - files/secrets/credentials.yml
-
   tasks:
     - name: Ensure Docker is installed
       ansible.builtin.package:
