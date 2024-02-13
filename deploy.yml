@@ -9,7 +9,6 @@
       ansible.builtin.package:
         name: docker
         state: present
-
     - name: Run Apache container
       community.docker.docker_container:
         name: webapp
