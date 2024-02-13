@@ -49,7 +49,7 @@ pipeline {
                        apt update
                        apt-get install -y sshpass
                        apt install ansible -y                
-                       sh 'ansible-playbook -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" deploy.yml --private-key $EC2_SSH_KEY'
+                       ansible-playbook -i hosts.yml --vault-password-file vault.key  --extra-vars "ansible_sudo_pass=$SUDOPASS" deploy.yml --private-key $EC2_SSH_KEY
                        '''
                    }
                } 
