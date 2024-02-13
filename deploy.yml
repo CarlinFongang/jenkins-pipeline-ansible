@@ -15,17 +15,6 @@
         state: present
         update_cache: true
 
-    - name: Add Docker's official GPG key
-      ansible.builtin.apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Install Docker CE
-      apt:
-        name: docker-ce
-        state: present
-        update_cache: true
-
     - name: Ensure Docker service is running
       service:
         name: docker
