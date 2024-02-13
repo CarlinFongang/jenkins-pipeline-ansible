@@ -1,6 +1,6 @@
 ---
 - name: Deploy Apache container
-  hosts: prod
+  hosts: all
   become: true
   vars_files:
     - files/secrets/credentials.yml
