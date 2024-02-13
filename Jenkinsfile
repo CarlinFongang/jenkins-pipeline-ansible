@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Test and deploy the application') {
             environment {
-                //SUDOPASS = credentials('sudopass')
+                SUDOPASS = credentials('sudopass')
                 EC2_SSH_KEY = credentials('ec2_ssh_key') // Nouvelle clé SSH pour accéder à l'instance EC2
                 EC2_HOST = '44.201.3.226' // Remplacez par l'adresse IP publique ou le DNS de votre instance EC2
                 EC2_USER = 'ubuntu' // Remplacez par l'utilisateur SSH de votre instance EC2
