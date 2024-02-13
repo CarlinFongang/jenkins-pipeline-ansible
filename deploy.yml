@@ -2,14 +2,6 @@
 - name: Deploy Apache container
   hosts: prod
   become: true
-  pre_tasks:
-    - name: Install EPEL repo
-      package: name=epel-release state=present
-      when: ansible_distribution == "ubuntu"
-    - name: install python-pip
-      apt: name=python-pip state=present update_cache=yes
-    - name: Install docker python
-      pip: name=docker-py  
   tasks:
     - name: Ensure Docker is installed
       ansible.builtin.package:
