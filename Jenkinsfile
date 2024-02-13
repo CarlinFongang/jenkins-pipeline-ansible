@@ -30,7 +30,7 @@ pipeline {
             environment {
                 SUDOPASS = credentials('sudopass')
                 EC2_SSH_KEY = credentials('ec2_ssh_key') // Nouvelle clé SSH pour accéder à l'instance EC2
-                EC2_HOST = '100.24.99.203' // Remplacez par l'adresse IP publique ou le DNS de votre instance EC2
+                EC2_HOST = '3.231.162.90' // Remplacez par l'adresse IP publique ou le DNS de votre instance EC2
                 EC2_USER = 'ubuntu' // Remplacez par l'utilisateur SSH de votre instance EC2
             }
             agent { docker { image 'registry.gitlab.com/carlinfongang-labs/docker-images/docker-ansible:latest' } }
